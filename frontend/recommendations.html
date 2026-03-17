@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Recommendations – JobMatch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader"><div style="text-align:center;"><div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div><div class="loader-spinner" style="margin:1rem auto 0;"></div></div></div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo-icon">J</div><div class="sidebar-logo sidebar-text">Job<span>Match</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title sidebar-text">MAIN</div>
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-th-large"></i><span class="sidebar-text">Dashboard</span></a>
+        <a href="jobs.html" class="nav-item"><i class="fas fa-search"></i><span class="sidebar-text">Job Search</span></a>
+        <a href="recommendations.html" class="nav-item active"><i class="fas fa-robot"></i><span class="sidebar-text">AI Matches</span></a>
+        <a href="applications.html" class="nav-item"><i class="fas fa-clipboard-list"></i><span class="sidebar-text">My Applications</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">PROFILE</div>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span class="sidebar-text">Job Profile</span></a>
+        <a href="cv-analysis.html" class="nav-item"><i class="fas fa-file-alt"></i><span class="sidebar-text">CV Analysis</span></a>
+        <a href="saved-jobs.html" class="nav-item"><i class="fas fa-bookmark"></i><span class="sidebar-text">Saved Jobs</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">ACCOUNT</div>
+        <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span class="sidebar-text">Settings</span></a>
+        <div class="nav-item" id="logoutBtn" style="color:#f87171;cursor:pointer;"><i class="fas fa-sign-out-alt"></i><span class="sidebar-text">Logout</span></div>
+      </nav>
+      <div class="sidebar-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="avatar avatar-sm" id="sidebarAvatar">U</div>
+          <div class="sidebar-text" style="overflow:hidden;"><div style="font-size:0.82rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarName">Loading...</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.4);" id="sidebarEmail">...</div></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content" id="mainContent">
+      <div class="topbar">
+        <button class="toggle-sidebar" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title">AI Recommendations</div>
+        <div class="topbar-actions">
+          <div style="display:flex;align-items:center;gap:0.4rem;"><i class="fas fa-sun" style="font-size:0.8rem;color:var(--text-muted);"></i><button class="theme-toggle" id="themeToggle"></button><i class="fas fa-moon" style="font-size:0.8rem;color:var(--text-muted);"></i></div>
+          <div class="dropdown" id="userDropdown"><div class="avatar avatar-sm" id="topbarAvatar" style="cursor:pointer;">U</div><div class="dropdown-menu"><div class="dropdown-item" onclick="window.location='profile.html'"><i class="fas fa-user-circle"></i> My Profile</div><div class="dropdown-divider"></div><div class="dropdown-item" style="color:var(--danger);" id="ddLogout"><i class="fas fa-sign-out-alt" style="color:var(--danger);"></i> Logout</div></div></div>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <!-- Hero Banner -->
+        <div style="background:var(--gradient-hero);border-radius:20px;padding:2rem;color:#fff;margin-bottom:2rem;position:relative;overflow:hidden;" class="animate-fadeInDown">
+          <div style="position:relative;z-index:1;">
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+              <div style="width:42px;height:42px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">🤖</div>
+              <h2 style="color:#fff;font-size:1.5rem;">AI-Powered Job Matches</h2>
+            </div>
+            <p style="color:rgba(255,255,255,0.8);max-width:600px;">Based on your CV and profile, our AI has found the best matching jobs for you. Jobs are ranked by your skill match percentage.</p>
+            <div style="display:flex;gap:1rem;margin-top:1.25rem;flex-wrap:wrap;">
+              <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:0.75rem 1.25rem;text-align:center;">
+                <div style="font-size:1.5rem;font-weight:800;" id="totalMatchesCount">0</div>
+                <div style="font-size:0.78rem;opacity:0.8;">Total Matches</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:0.75rem 1.25rem;text-align:center;">
+                <div style="font-size:1.5rem;font-weight:800;" id="avgMatchScore">-</div>
+                <div style="font-size:0.78rem;opacity:0.8;">Avg Match %</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:0.75rem 1.25rem;text-align:center;">
+                <div style="font-size:1.5rem;font-weight:800;" id="perfectMatchCount">0</div>
+                <div style="font-size:0.78rem;opacity:0.8;">Perfect Matches (90%+)</div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.06);"></div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+          <button class="filter-chip active" data-rec-filter="all">All Matches</button>
+          <button class="filter-chip" data-rec-filter="90">90%+ Perfect</button>
+          <button class="filter-chip" data-rec-filter="70">70%+ Good</button>
+          <button class="filter-chip" data-rec-filter="50">50%+ Fair</button>
+          <button class="filter-chip" data-rec-filter="new">New Today</button>
+        </div>
+
+        <!-- Recommendations Grid -->
+        <div id="recommendationsGrid" class="grid-auto stagger-children">
+          <!-- AI Loading State -->
+          <div style="grid-column:1/-1;padding:3rem;text-align:center;" class="card">
+            <div class="ai-loading">
+              <div class="ai-loading-rings">
+                <div class="ai-loading-ring"></div>
+                <div class="ai-loading-ring"></div>
+                <div class="ai-loading-ring"></div>
+                <div class="ai-loading-center"><i class="fas fa-robot"></i></div>
+              </div>
+              <div class="ai-loading-text">AI is analyzing your profile and finding the best matches...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Job Detail Modal (same as jobs.html) -->
+  <div class="modal-overlay" id="jobDetailModal">
+    <div class="modal" style="max-width:720px;">
+      <div class="modal-header">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div class="company-logo" id="modalCompanyLogo" style="width:56px;height:56px;font-size:1.5rem;"></div>
+          <div><h3 class="modal-title" id="modalJobTitle">Job Title</h3><div style="font-size:0.85rem;color:var(--text-secondary);" id="modalCompanyName">Company</div></div>
+        </div>
+        <button class="modal-close" id="closeJobModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body" id="jobModalContent"></div>
+      <div class="modal-footer" id="jobModalFooter">
+        <button class="btn btn-ghost" id="saveJobModalBtn"><i class="fas fa-bookmark"></i> Save Job</button>
+        <button class="btn btn-primary" id="applyJobModalBtn"><i class="fas fa-paper-plane"></i> Apply Now</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/recommendations.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      requireAuth();
+      hideLoader();
+      initRecommendationsPage();
+    });
+  </script>
+</body>
+</html>

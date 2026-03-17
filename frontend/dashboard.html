@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – JobMatch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <div style="text-align:center;">
+      <div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div>
+      <div class="loader-spinner" style="margin:1rem auto 0;"></div>
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">J</div>
+        <div class="sidebar-logo sidebar-text">Job<span>Match</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title sidebar-text">MAIN</div>
+        <a href="dashboard.html" class="nav-item active">
+          <i class="fas fa-th-large"></i>
+          <span class="sidebar-text">Dashboard</span>
+        </a>
+        <a href="jobs.html" class="nav-item">
+          <i class="fas fa-search"></i>
+          <span class="sidebar-text">Job Search</span>
+        </a>
+        <a href="recommendations.html" class="nav-item">
+          <i class="fas fa-robot"></i>
+          <span class="sidebar-text">AI Matches</span>
+          <span class="nav-badge sidebar-text" id="matchCountBadge">0</span>
+        </a>
+        <a href="applications.html" class="nav-item">
+          <i class="fas fa-clipboard-list"></i>
+          <span class="sidebar-text">My Applications</span>
+        </a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">PROFILE</div>
+        <a href="profile.html" class="nav-item">
+          <i class="fas fa-user-circle"></i>
+          <span class="sidebar-text">Job Profile</span>
+        </a>
+        <a href="cv-analysis.html" class="nav-item">
+          <i class="fas fa-file-alt"></i>
+          <span class="sidebar-text">CV Analysis</span>
+        </a>
+        <a href="saved-jobs.html" class="nav-item">
+          <i class="fas fa-bookmark"></i>
+          <span class="sidebar-text">Saved Jobs</span>
+        </a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">ACCOUNT</div>
+        <a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          <span class="sidebar-text">Settings</span>
+        </a>
+        <div class="nav-item" id="logoutBtn" style="color:#f87171;cursor:pointer;">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="sidebar-text">Logout</span>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="avatar avatar-sm" id="sidebarAvatar">U</div>
+          <div class="sidebar-text" style="overflow:hidden;">
+            <div style="font-size:0.82rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarName">Loading...</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);" id="sidebarEmail">...</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <!-- Topbar -->
+      <div class="topbar">
+        <button class="toggle-sidebar" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title">Dashboard</div>
+        <div class="topbar-actions">
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <i class="fas fa-sun" style="font-size:0.8rem;color:var(--text-muted);"></i>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme"></button>
+            <i class="fas fa-moon" style="font-size:0.8rem;color:var(--text-muted);"></i>
+          </div>
+          <button class="icon-btn" id="notifBtn">
+            <i class="fas fa-bell"></i>
+            <span class="notif-dot" id="notifDot" style="display:none;"></span>
+          </button>
+          <div class="dropdown" id="userDropdown">
+            <div class="avatar avatar-sm" id="topbarAvatar" style="cursor:pointer;">U</div>
+            <div class="dropdown-menu">
+              <div class="dropdown-item" onclick="window.location='profile.html'"><i class="fas fa-user-circle"></i> My Profile</div>
+              <div class="dropdown-item" onclick="window.location='settings.html'"><i class="fas fa-cog"></i> Settings</div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" style="color:var(--danger);" id="ddLogout"><i class="fas fa-sign-out-alt" style="color:var(--danger);"></i> Logout</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner animate-fadeInDown">
+          <div class="welcome-text">
+            <h2>Welcome back, <span id="welcomeName">User</span>! 👋</h2>
+            <p id="welcomeSubtext">Your AI-powered job recommendations are ready. Let's find your perfect match!</p>
+            <div class="profile-completion">
+              <div class="progress" style="flex:1;background:rgba(255,255,255,0.3);">
+                <div class="progress-bar" id="profileProgressBar" style="background:var(--accent);width:0%;transition:width 1s;"></div>
+              </div>
+              <span id="profileCompletionText">Profile 0% Complete</span>
+            </div>
+          </div>
+          <div class="welcome-image">🚀</div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid-4 stagger-children" style="margin-bottom:2rem;" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#ede9fe;color:var(--primary);"><i class="fas fa-robot"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statMatches">0</div>
+              <div class="stat-label">AI Job Matches</div>
+              <div class="stat-change stat-up"><i class="fas fa-arrow-up"></i> New today</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#d1fae5;color:var(--success);"><i class="fas fa-paper-plane"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statApplied">0</div>
+              <div class="stat-label">Jobs Applied</div>
+              <div class="stat-change" id="appliedChange" style="color:var(--text-muted);">Total applications</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fef3c7;color:var(--warning);"><i class="fas fa-bookmark"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statSaved">0</div>
+              <div class="stat-label">Saved Jobs</div>
+              <div class="stat-change" style="color:var(--text-muted);">Bookmarked</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#dbeafe;color:var(--info);"><i class="fas fa-eye"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statViews">0</div>
+              <div class="stat-label">Profile Views</div>
+              <div class="stat-change stat-up"><i class="fas fa-arrow-up"></i> This week</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="gap:1.5rem;">
+          <!-- Applied Jobs List -->
+          <div class="card" style="grid-column:span 2;">
+            <div class="card-header">
+              <div>
+                <h3 class="section-title">My <span>Applications</span></h3>
+                <p style="font-size:0.82rem;color:var(--text-muted);margin:0;">Track all your job applications in one place</p>
+              </div>
+              <a href="applications.html" class="btn btn-sm btn-outline">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="applied-table" id="appliedTable">
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Position</th>
+                    <th>Domain</th>
+                    <th>Applied On</th>
+                    <th>Status</th>
+                    <th>Match</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="appliedTableBody">
+                  <tr><td colspan="7">
+                    <div class="empty-state" style="padding:2rem;">
+                      <div class="empty-state-icon"><i class="fas fa-briefcase"></i></div>
+                      <h3>No applications yet</h3>
+                      <p>Start applying to jobs that match your skills</p>
+                      <a href="jobs.html" class="btn btn-primary btn-sm">Browse Jobs</a>
+                    </div>
+                  </td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Recommendations Preview -->
+        <div style="margin-top:1.5rem;">
+          <div class="section-header">
+            <h3 class="section-title"><i class="fas fa-robot" style="color:var(--primary);"></i> AI Job <span>Recommendations</span></h3>
+            <a href="recommendations.html" class="btn btn-sm btn-outline">See All <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div id="recommendationsPreview" class="grid-auto stagger-children">
+            <!-- Cards injected by JS -->
+            <div class="card" style="padding:2rem;text-align:center;grid-column:1/-1;">
+              <div class="ai-loading">
+                <div class="ai-loading-rings">
+                  <div class="ai-loading-ring"></div>
+                  <div class="ai-loading-ring"></div>
+                  <div class="ai-loading-ring"></div>
+                  <div class="ai-loading-center"><i class="fas fa-robot"></i></div>
+                </div>
+                <div class="ai-loading-text">Analyzing your CV and finding matches...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills Overview -->
+        <div style="margin-top:1.5rem;" class="grid-2" id="skillsSection">
+          <div class="card">
+            <div class="card-header">
+              <h4>Your Top Skills</h4>
+              <a href="cv-analysis.html" class="btn btn-sm btn-ghost">Full Analysis</a>
+            </div>
+            <div class="card-body">
+              <div id="topSkillsList" class="skills-container">
+                <div class="skeleton skeleton-text" style="width:80px;"></div>
+                <div class="skeleton skeleton-text" style="width:100px;"></div>
+                <div class="skeleton skeleton-text" style="width:70px;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h4>Skills to Learn</h4>
+              <span class="badge badge-warning">Recommended</span>
+            </div>
+            <div class="card-body">
+              <div id="missingSkillsList" class="skills-container">
+                <div class="skeleton skeleton-text" style="width:90px;"></div>
+                <div class="skeleton skeleton-text" style="width:110px;"></div>
+                <div class="skeleton skeleton-text" style="width:75px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Panel -->
+  <div id="notifPanel" style="position:fixed;top:64px;right:1.5rem;width:360px;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);z-index:300;display:none;max-height:500px;overflow:hidden;">
+    <div style="padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+      <h4 style="font-size:1rem;">Notifications</h4>
+      <button style="border:none;background:none;cursor:pointer;font-size:0.8rem;color:var(--primary);" id="markAllReadBtn">Mark all read</button>
+    </div>
+    <div id="notifList" style="overflow-y:auto;max-height:400px;"></div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      requireAuth();
+      hideLoader();
+      initDashboard();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings – JobMatch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader"><div style="text-align:center;"><div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div><div class="loader-spinner" style="margin:1rem auto 0;"></div></div></div>
+  <div class="toast-container" id="toastContainer"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo-icon">J</div><div class="sidebar-logo sidebar-text">Job<span>Match</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title sidebar-text">MAIN</div>
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-th-large"></i><span class="sidebar-text">Dashboard</span></a>
+        <a href="jobs.html" class="nav-item"><i class="fas fa-search"></i><span class="sidebar-text">Job Search</span></a>
+        <a href="recommendations.html" class="nav-item"><i class="fas fa-robot"></i><span class="sidebar-text">AI Matches</span></a>
+        <a href="applications.html" class="nav-item"><i class="fas fa-clipboard-list"></i><span class="sidebar-text">My Applications</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">PROFILE</div>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span class="sidebar-text">Job Profile</span></a>
+        <a href="cv-analysis.html" class="nav-item"><i class="fas fa-file-alt"></i><span class="sidebar-text">CV Analysis</span></a>
+        <a href="saved-jobs.html" class="nav-item"><i class="fas fa-bookmark"></i><span class="sidebar-text">Saved Jobs</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">ACCOUNT</div>
+        <a href="settings.html" class="nav-item active"><i class="fas fa-cog"></i><span class="sidebar-text">Settings</span></a>
+        <div class="nav-item" id="logoutBtn" style="color:#f87171;cursor:pointer;"><i class="fas fa-sign-out-alt"></i><span class="sidebar-text">Logout</span></div>
+      </nav>
+      <div class="sidebar-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="avatar avatar-sm" id="sidebarAvatar">U</div>
+          <div class="sidebar-text"><div style="font-size:0.82rem;font-weight:700;color:#fff;" id="sidebarName">Loading...</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.4);" id="sidebarEmail">...</div></div>
+        </div>
+      </div>
+    </aside>
+    <div class="main-content" id="mainContent">
+      <div class="topbar">
+        <button class="toggle-sidebar" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title">Settings</div>
+        <div class="topbar-actions">
+          <div style="display:flex;align-items:center;gap:0.4rem;"><i class="fas fa-sun" style="font-size:0.8rem;color:var(--text-muted);"></i><button class="theme-toggle" id="themeToggle"></button><i class="fas fa-moon" style="font-size:0.8rem;color:var(--text-muted);"></i></div>
+          <div class="dropdown" id="userDropdown"><div class="avatar avatar-sm" id="topbarAvatar" style="cursor:pointer;">U</div><div class="dropdown-menu"><div class="dropdown-item" onclick="window.location='profile.html'"><i class="fas fa-user-circle"></i> My Profile</div><div class="dropdown-divider"></div><div class="dropdown-item" style="color:var(--danger);" id="ddLogout"><i class="fas fa-sign-out-alt" style="color:var(--danger);"></i> Logout</div></div></div>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="page-header animate-fadeInDown"><h1>Account <span style="color:var(--primary);">Settings</span></h1><p>Manage your account preferences and security</p></div>
+        <div style="max-width:640px;">
+          <!-- Appearance -->
+          <div class="card animate-fadeInUp" style="margin-bottom:1.5rem;">
+            <div class="card-header"><h4><i class="fas fa-palette" style="color:var(--primary);margin-right:8px;"></i>Appearance</h4></div>
+            <div class="card-body">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <div><div style="font-weight:600;font-size:0.9rem;">Dark Mode</div><div style="font-size:0.82rem;color:var(--text-muted);">Switch between light and dark themes</div></div>
+                <button class="theme-toggle" id="themeToggle2"></button>
+              </div>
+            </div>
+          </div>
+          <!-- Security -->
+          <div class="card animate-fadeInUp delay-100" style="margin-bottom:1.5rem;">
+            <div class="card-header"><h4><i class="fas fa-shield-alt" style="color:var(--success);margin-right:8px;"></i>Security</h4></div>
+            <div class="card-body">
+              <div id="passAlert" style="margin-bottom:1rem;"></div>
+              <div class="form-group"><label class="form-label">Current Password</label><div class="input-group"><i class="fas fa-lock input-icon"></i><input type="password" class="form-control" id="currentPass" placeholder="Enter current password" /></div></div>
+              <div class="form-group"><label class="form-label">New Password</label><div class="input-group"><i class="fas fa-lock input-icon"></i><input type="password" class="form-control" id="newPass" placeholder="New password (min 8 chars + special char)" /></div></div>
+              <div class="form-group"><label class="form-label">Confirm New Password</label><div class="input-group"><i class="fas fa-lock input-icon"></i><input type="password" class="form-control" id="confirmNewPass" placeholder="Confirm new password" /></div></div>
+              <button class="btn btn-primary" id="changePassBtn"><i class="fas fa-save"></i> Update Password</button>
+            </div>
+          </div>
+          <!-- Account Info -->
+          <div class="card animate-fadeInUp delay-200" style="margin-bottom:1.5rem;">
+            <div class="card-header"><h4><i class="fas fa-user" style="color:var(--info);margin-right:8px;"></i>Account Info</h4></div>
+            <div class="card-body" id="accountInfo">
+              <div class="skeleton skeleton-text" style="width:60%;"></div>
+              <div class="skeleton skeleton-text" style="width:40%;margin-top:0.5rem;"></div>
+            </div>
+          </div>
+          <!-- Danger Zone -->
+          <div class="card animate-fadeInUp delay-300" style="border-color:rgba(239,68,68,0.3);">
+            <div class="card-header" style="background:rgba(239,68,68,0.05);"><h4 style="color:var(--danger);"><i class="fas fa-exclamation-triangle" style="margin-right:8px;"></i>Danger Zone</h4></div>
+            <div class="card-body">
+              <p style="font-size:0.88rem;margin-bottom:1rem;">These actions are irreversible. Please be careful.</p>
+              <button class="btn btn-danger btn-sm" id="deleteAccountBtn"><i class="fas fa-trash"></i> Delete Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      requireAuth();
+      hideLoader();
+      // Load account info
+      try {
+        const data = await API.getMe();
+        const user = data.user || {};
+        document.getElementById('accountInfo').innerHTML = `
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div><div style="font-size:0.75rem;color:var(--text-muted);">Full Name</div><div style="font-weight:600;">${escapeHtml(user.first_name+' '+user.last_name)}</div></div>
+            <div><div style="font-size:0.75rem;color:var(--text-muted);">Gmail</div><div style="font-weight:600;">${escapeHtml(user.email)}</div></div>
+            <div><div style="font-size:0.75rem;color:var(--text-muted);">Domain</div><div style="font-weight:600;">${escapeHtml(user.domain||'-')}</div></div>
+            <div><div style="font-size:0.75rem;color:var(--text-muted);">Member Since</div><div style="font-weight:600;">${formatDate(user.created_at)}</div></div>
+          </div>`;
+      } catch {}
+      // Change password
+      document.getElementById('changePassBtn')?.addEventListener('click', async () => {
+        const oldP = document.getElementById('currentPass').value;
+        const newP = document.getElementById('newPass').value;
+        const confP = document.getElementById('confirmNewPass').value;
+        if (!oldP || !newP || !confP) { showAlert('passAlert','warning','All fields are required'); return; }
+        if (newP !== confP) { showAlert('passAlert','danger','New passwords do not match'); return; }
+        const {strong} = getPassStrength(newP);
+        if (!strong) { showAlert('passAlert','danger','New password must meet security requirements'); return; }
+        try {
+          await API.updatePassword(oldP, newP);
+          showAlert('passAlert','success','Password updated successfully!');
+          document.getElementById('currentPass').value='';
+          document.getElementById('newPass').value='';
+          document.getElementById('confirmNewPass').value='';
+        } catch (err) { showAlert('passAlert','danger',err.message); }
+      });
+      document.getElementById('deleteAccountBtn')?.addEventListener('click', () => {
+        if (confirm('Are you sure? This action cannot be undone.')) {
+          showToast('info','Deleting...','Processing your request');
+        }
+      });
+      // Second theme toggle
+      document.getElementById('themeToggle2')?.addEventListener('click', toggleTheme);
+    });
+  </script>
+</body>
+</html>

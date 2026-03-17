@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Saved Jobs – JobMatch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader"><div style="text-align:center;"><div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div><div class="loader-spinner" style="margin:1rem auto 0;"></div></div></div>
+  <div class="toast-container" id="toastContainer"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo-icon">J</div><div class="sidebar-logo sidebar-text">Job<span>Match</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title sidebar-text">MAIN</div>
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-th-large"></i><span class="sidebar-text">Dashboard</span></a>
+        <a href="jobs.html" class="nav-item"><i class="fas fa-search"></i><span class="sidebar-text">Job Search</span></a>
+        <a href="recommendations.html" class="nav-item"><i class="fas fa-robot"></i><span class="sidebar-text">AI Matches</span></a>
+        <a href="applications.html" class="nav-item"><i class="fas fa-clipboard-list"></i><span class="sidebar-text">My Applications</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">PROFILE</div>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span class="sidebar-text">Job Profile</span></a>
+        <a href="cv-analysis.html" class="nav-item"><i class="fas fa-file-alt"></i><span class="sidebar-text">CV Analysis</span></a>
+        <a href="saved-jobs.html" class="nav-item active"><i class="fas fa-bookmark"></i><span class="sidebar-text">Saved Jobs</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">ACCOUNT</div>
+        <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span class="sidebar-text">Settings</span></a>
+        <div class="nav-item" id="logoutBtn" style="color:#f87171;cursor:pointer;"><i class="fas fa-sign-out-alt"></i><span class="sidebar-text">Logout</span></div>
+      </nav>
+      <div class="sidebar-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="avatar avatar-sm" id="sidebarAvatar">U</div>
+          <div class="sidebar-text"><div style="font-size:0.82rem;font-weight:700;color:#fff;" id="sidebarName">Loading...</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.4);" id="sidebarEmail">...</div></div>
+        </div>
+      </div>
+    </aside>
+    <div class="main-content" id="mainContent">
+      <div class="topbar">
+        <button class="toggle-sidebar" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title">Saved Jobs</div>
+        <div class="topbar-actions">
+          <div style="display:flex;align-items:center;gap:0.4rem;"><i class="fas fa-sun" style="font-size:0.8rem;color:var(--text-muted);"></i><button class="theme-toggle" id="themeToggle"></button><i class="fas fa-moon" style="font-size:0.8rem;color:var(--text-muted);"></i></div>
+          <div class="dropdown" id="userDropdown"><div class="avatar avatar-sm" id="topbarAvatar" style="cursor:pointer;">U</div><div class="dropdown-menu"><div class="dropdown-item" onclick="window.location='profile.html'"><i class="fas fa-user-circle"></i> My Profile</div><div class="dropdown-divider"></div><div class="dropdown-item" style="color:var(--danger);" id="ddLogout"><i class="fas fa-sign-out-alt" style="color:var(--danger);"></i> Logout</div></div></div>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="page-header animate-fadeInDown">
+          <h1>Saved <span style="color:var(--primary);">Jobs</span></h1>
+          <p>Jobs you've bookmarked for later</p>
+        </div>
+        <div id="savedJobsGrid" class="grid-auto stagger-children">
+          <div class="card" style="padding:3rem;text-align:center;grid-column:1/-1;">
+            <div class="loader-spinner" style="margin:0 auto 1rem;"></div>
+            <p>Loading saved jobs...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    async function initSavedPage() {
+      const grid = document.getElementById('savedJobsGrid');
+      try {
+        const data = await API.getSavedJobs();
+        const jobs = data.saved_jobs || [];
+        if (jobs.length === 0) {
+          grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;padding:4rem;"><div class="empty-state-icon"><i class="fas fa-bookmark"></i></div><h3>No saved jobs</h3><p>Browse jobs and bookmark them to see them here</p><a href="jobs.html" class="btn btn-primary">Browse Jobs</a></div>`;
+          return;
+        }
+        grid.innerHTML = jobs.map(job => buildJobCard(job, true)).join('');
+        grid.querySelectorAll('.saved-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            try { await API.unsaveJob(btn.dataset.saveId); btn.closest('.job-card').remove(); showToast('info','Removed','Job removed from saved'); }
+            catch (err) { showToast('error','Error',err.message); }
+          });
+        });
+        grid.querySelectorAll('.job-card').forEach(card => {
+          card.style.cursor='pointer';
+          card.addEventListener('click',(e)=>{ if(e.target.closest('.saved-btn'))return; showToast('info','Job',card.dataset.jobId); });
+        });
+      } catch (err) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;padding:4rem;"><p>${err.message}</p></div>`;
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => { requireAuth(); hideLoader(); initSavedPage(); });
+  </script>
+</body>
+</html>

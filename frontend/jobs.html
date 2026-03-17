@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Search – JobMatch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader"><div style="text-align:center;"><div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div><div class="loader-spinner" style="margin:1rem auto 0;"></div></div></div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar (shared) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">J</div>
+        <div class="sidebar-logo sidebar-text">Job<span>Match</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title sidebar-text">MAIN</div>
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-th-large"></i><span class="sidebar-text">Dashboard</span></a>
+        <a href="jobs.html" class="nav-item active"><i class="fas fa-search"></i><span class="sidebar-text">Job Search</span></a>
+        <a href="recommendations.html" class="nav-item"><i class="fas fa-robot"></i><span class="sidebar-text">AI Matches</span><span class="nav-badge sidebar-text" id="matchCountBadge">0</span></a>
+        <a href="applications.html" class="nav-item"><i class="fas fa-clipboard-list"></i><span class="sidebar-text">My Applications</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">PROFILE</div>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span class="sidebar-text">Job Profile</span></a>
+        <a href="cv-analysis.html" class="nav-item"><i class="fas fa-file-alt"></i><span class="sidebar-text">CV Analysis</span></a>
+        <a href="saved-jobs.html" class="nav-item"><i class="fas fa-bookmark"></i><span class="sidebar-text">Saved Jobs</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">ACCOUNT</div>
+        <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span class="sidebar-text">Settings</span></a>
+        <div class="nav-item" id="logoutBtn" style="color:#f87171;cursor:pointer;"><i class="fas fa-sign-out-alt"></i><span class="sidebar-text">Logout</span></div>
+      </nav>
+      <div class="sidebar-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="avatar avatar-sm" id="sidebarAvatar">U</div>
+          <div class="sidebar-text" style="overflow:hidden;">
+            <div style="font-size:0.82rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarName">Loading...</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);" id="sidebarEmail">...</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content" id="mainContent">
+      <!-- Topbar -->
+      <div class="topbar">
+        <button class="toggle-sidebar" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title">Job Search</div>
+        <div class="topbar-actions">
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <i class="fas fa-sun" style="font-size:0.8rem;color:var(--text-muted);"></i>
+            <button class="theme-toggle" id="themeToggle"></button>
+            <i class="fas fa-moon" style="font-size:0.8rem;color:var(--text-muted);"></i>
+          </div>
+          <div class="dropdown" id="userDropdown">
+            <div class="avatar avatar-sm" id="topbarAvatar" style="cursor:pointer;">U</div>
+            <div class="dropdown-menu">
+              <div class="dropdown-item" onclick="window.location='profile.html'"><i class="fas fa-user-circle"></i> My Profile</div>
+              <div class="dropdown-item" onclick="window.location='settings.html'"><i class="fas fa-cog"></i> Settings</div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" style="color:var(--danger);" id="ddLogout"><i class="fas fa-sign-out-alt" style="color:var(--danger);"></i> Logout</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <div class="page-header animate-fadeInDown">
+          <h1>Find Your <span style="color:var(--primary);">Perfect Job</span></h1>
+          <p>Search thousands of jobs and let AI tell you how well your CV matches</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="card animate-fadeInUp" style="margin-bottom:1.5rem;padding:1.5rem;">
+          <div class="search-container" style="flex-wrap:wrap;gap:0.75rem;">
+            <div class="search-bar" style="flex:2;min-width:200px;">
+              <i class="fas fa-search"></i>
+              <input type="text" id="jobSearchInput" placeholder="Job title, skill, or keyword..." />
+            </div>
+            <div class="search-bar" style="flex:1;min-width:150px;">
+              <i class="fas fa-map-marker-alt"></i>
+              <input type="text" id="locationInput" placeholder="Location or Remote" />
+            </div>
+            <button class="btn btn-primary" id="searchBtn" style="flex-shrink:0;">
+              <i class="fas fa-search"></i> Search Jobs
+            </button>
+          </div>
+          <div class="search-filters" id="filterChips">
+            <div class="filter-chip active" data-filter="all"><i class="fas fa-globe"></i> All Jobs</div>
+            <div class="filter-chip" data-filter="full-time"><i class="fas fa-clock"></i> Full-time</div>
+            <div class="filter-chip" data-filter="part-time"><i class="fas fa-hourglass-half"></i> Part-time</div>
+            <div class="filter-chip" data-filter="remote"><i class="fas fa-laptop-house"></i> Remote</div>
+            <div class="filter-chip" data-filter="internship"><i class="fas fa-graduation-cap"></i> Internship</div>
+            <div class="filter-chip" data-filter="contract"><i class="fas fa-file-contract"></i> Contract</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;">
+          <!-- Sidebar Filters -->
+          <div style="width:240px;flex-shrink:0;" class="animate-fadeInLeft" id="filterSidebar">
+            <div class="card" style="padding:1.25rem;margin-bottom:1rem;">
+              <h4 style="margin-bottom:1rem;font-size:0.95rem;">Filter By</h4>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.78rem;">Domain</label>
+                <select class="form-control" id="domainFilter" style="font-size:0.85rem;">
+                  <option value="">All Domains</option>
+                  <option value="software_engineering">Software Engineering</option>
+                  <option value="data_science">Data Science & AI/ML</option>
+                  <option value="product_management">Product Management</option>
+                  <option value="design">UI/UX Design</option>
+                  <option value="devops">DevOps & Cloud</option>
+                  <option value="cybersecurity">Cybersecurity</option>
+                  <option value="marketing">Digital Marketing</option>
+                  <option value="finance">Finance & Accounting</option>
+                  <option value="sales">Sales</option>
+                  <option value="hr">Human Resources</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.78rem;">Experience Level</label>
+                <select class="form-control" id="expFilter" style="font-size:0.85rem;">
+                  <option value="">All Levels</option>
+                  <option value="entry">Entry Level (0-2 yrs)</option>
+                  <option value="mid">Mid Level (2-5 yrs)</option>
+                  <option value="senior">Senior (5-10 yrs)</option>
+                  <option value="lead">Lead / Principal (10+ yrs)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.78rem;">Salary Range (USD/year)</label>
+                <div style="display:flex;gap:0.5rem;">
+                  <input type="number" class="form-control" id="salaryMin" placeholder="Min" style="font-size:0.82rem;" />
+                  <input type="number" class="form-control" id="salaryMax" placeholder="Max" style="font-size:0.82rem;" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.78rem;">Date Posted</label>
+                <select class="form-control" id="dateFilter" style="font-size:0.85rem;">
+                  <option value="">Any Time</option>
+                  <option value="1">Last 24 hours</option>
+                  <option value="7">Last 7 days</option>
+                  <option value="30">Last 30 days</option>
+                </select>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.5rem;">
+                <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.82rem;color:var(--text-secondary);">
+                  <input type="checkbox" id="cvMatchFilter" style="accent-color:var(--primary);" />
+                  Show CV match %
+                </label>
+              </div>
+              <button class="btn btn-outline btn-block btn-sm" id="applyFilterBtn" style="margin-top:1rem;">
+                <i class="fas fa-filter"></i> Apply Filters
+              </button>
+              <button class="btn btn-ghost btn-block btn-sm" id="clearFilterBtn" style="margin-top:0.5rem;">Clear Filters</button>
+            </div>
+          </div>
+
+          <!-- Job Listings -->
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;" class="animate-fadeInDown">
+              <div style="font-size:0.88rem;color:var(--text-secondary);" id="resultsCount">Loading jobs...</div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <span style="font-size:0.82rem;color:var(--text-muted);">Sort by:</span>
+                <select class="form-control" id="sortBy" style="width:auto;font-size:0.85rem;padding:0.4rem 0.75rem;">
+                  <option value="relevance">Relevance</option>
+                  <option value="date">Date</option>
+                  <option value="salary">Salary</option>
+                  <option value="match">CV Match</option>
+                </select>
+                <button class="icon-btn" id="toggleView" title="Toggle view">
+                  <i class="fas fa-th-large" id="viewIcon"></i>
+                </button>
+              </div>
+            </div>
+            <div id="jobListings" class="stagger-children" style="display:flex;flex-direction:column;gap:1rem;">
+              <!-- Job cards injected by JS -->
+            </div>
+            <div id="paginationContainer" style="margin-top:1.5rem;" class="pagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Job Detail Modal -->
+  <div class="modal-overlay" id="jobDetailModal">
+    <div class="modal" style="max-width:720px;">
+      <div class="modal-header">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div class="company-logo" id="modalCompanyLogo" style="width:56px;height:56px;font-size:1.5rem;"></div>
+          <div>
+            <h3 class="modal-title" id="modalJobTitle">Job Title</h3>
+            <div style="font-size:0.85rem;color:var(--text-secondary);" id="modalCompanyName">Company</div>
+          </div>
+        </div>
+        <button class="modal-close" id="closeJobModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body" id="jobModalContent">
+        <!-- Content injected by JS -->
+      </div>
+      <div class="modal-footer" id="jobModalFooter">
+        <button class="btn btn-ghost" id="saveJobModalBtn"><i class="fas fa-bookmark"></i> Save Job</button>
+        <button class="btn btn-primary" id="applyJobModalBtn"><i class="fas fa-paper-plane"></i> Apply Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV Match Analysis Modal -->
+  <div class="modal-overlay" id="cvMatchModal">
+    <div class="modal" style="max-width:600px;">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-robot" style="color:var(--primary);margin-right:8px;"></i>CV Match Analysis</h3>
+        <button class="modal-close" id="closeCvMatchModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body" id="cvMatchContent">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/jobs.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Public access allowed: users can browse jobs without login.
+      // Login is required only when applying or running CV match analysis.
+      initPublicShell();
+      hideLoader();
+      initJobsPage();
+    });
+  </script>
+</body>
+</html>

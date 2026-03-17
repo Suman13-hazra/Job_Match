@@ -1,0 +1,392 @@
+/* =====================================================
+   JOBMATCH PRO - Animations Stylesheet
+   ===================================================== */
+
+/* ---------- Keyframe Definitions ---------- */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 1; transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes floatDelay {
+  0%, 100% { transform: translateY(-6px) rotate(3deg); }
+  50% { transform: translateY(6px) rotate(-3deg); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+@keyframes countUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes progressFill {
+  from { width: 0%; }
+  to { width: var(--target-width, 70%); }
+}
+
+@keyframes borderPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79,70,229,0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(79,70,229,0); }
+}
+
+@keyframes typing {
+  0%, 60%, 100% { transform: initial; }
+  30% { transform: translateY(-8px); }
+}
+
+@keyframes waveUp {
+  0% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1.2); }
+  100% { transform: scaleY(0.5); }
+}
+
+@keyframes rotate360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 50%, 90% { transform: translateX(-5px); }
+  30%, 70% { transform: translateX(5px); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.2); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.15); }
+  70% { transform: scale(1); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(79,70,229,0.3); }
+  50% { box-shadow: 0 0 20px rgba(79,70,229,0.7), 0 0 40px rgba(79,70,229,0.3); }
+}
+
+/* ---------- Animation Classes ---------- */
+.animate-fadeIn { animation: fadeIn 0.5s ease both; }
+.animate-fadeInUp { animation: fadeInUp 0.5s ease both; }
+.animate-fadeInDown { animation: fadeInDown 0.5s ease both; }
+.animate-fadeInLeft { animation: fadeInLeft 0.5s ease both; }
+.animate-fadeInRight { animation: fadeInRight 0.5s ease both; }
+.animate-scaleIn { animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-bounceIn { animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-shake { animation: shake 0.5s ease; }
+.animate-heartbeat { animation: heartbeat 1.5s ease infinite; }
+.animate-glow { animation: glow 2s ease-in-out infinite; }
+.animate-spin { animation: spin 1s linear infinite; }
+
+/* Delay Classes */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }
+
+/* ---------- Intersection Observer Animations ---------- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.scroll-reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.scroll-reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---------- Hero Floating Elements ---------- */
+.floating-element {
+  animation: float 4s ease-in-out infinite;
+}
+.floating-element:nth-child(2) { animation-delay: -1s; animation-duration: 5s; }
+.floating-element:nth-child(3) { animation-delay: -2s; animation-duration: 3.5s; }
+
+/* ---------- Auth Hero Shapes ---------- */
+.shape-1 {
+  width: 300px; height: 300px;
+  top: -100px; right: -100px;
+  animation: float 6s ease-in-out infinite;
+}
+.shape-2 {
+  width: 150px; height: 150px;
+  bottom: 50px; left: -50px;
+  animation: float 4s ease-in-out infinite reverse;
+}
+.shape-3 {
+  width: 80px; height: 80px;
+  top: 40%; right: 10%;
+  animation: float 3s ease-in-out infinite;
+}
+.shape-4 {
+  width: 50px; height: 50px;
+  top: 20%; left: 20%;
+  animation: floatDelay 4s ease-in-out infinite;
+}
+
+/* ---------- Typing Dots ---------- */
+.typing-dots { display: flex; gap: 4px; align-items: center; }
+.typing-dots span {
+  width: 6px; height: 6px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: inline-block;
+}
+.typing-dots span:nth-child(1) { animation: typing 1.2s ease infinite; }
+.typing-dots span:nth-child(2) { animation: typing 1.2s ease 0.15s infinite; }
+.typing-dots span:nth-child(3) { animation: typing 1.2s ease 0.3s infinite; }
+
+/* ---------- AI Loading Animation ---------- */
+.ai-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+}
+.ai-loading-rings {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.ai-loading-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  animation: rotate360 1.5s linear infinite;
+}
+.ai-loading-ring:nth-child(1) {
+  inset: 0;
+  border-top-color: var(--primary);
+  animation-duration: 1.2s;
+}
+.ai-loading-ring:nth-child(2) {
+  inset: 8px;
+  border-right-color: var(--accent);
+  animation-duration: 1.8s;
+  animation-direction: reverse;
+}
+.ai-loading-ring:nth-child(3) {
+  inset: 16px;
+  border-bottom-color: var(--success);
+  animation-duration: 2.4s;
+}
+.ai-loading-center {
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%,-50%);
+  width: 30px; height: 30px;
+  background: var(--gradient-hero);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; color: #fff;
+  font-weight: 700;
+}
+.ai-loading-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ---------- Percentage Circle Animation ---------- */
+.animated-progress .progress-bar {
+  animation: progressFill 1s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+/* ---------- Card Entrance Stagger ---------- */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* ---------- Skill Match Animation ---------- */
+.skill-match-item .progress-bar {
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ---------- Page Transition ---------- */
+.page-transition-enter {
+  animation: fadeInUp 0.4s ease;
+}
+
+/* ---------- Notification Animation ---------- */
+.notif-dot-pulse {
+  animation: borderPulse 2s ease-in-out infinite;
+}
+
+/* ---------- Logo Animation ---------- */
+.logo-animate {
+  animation: gradientShift 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+/* ---------- Button Ripple ---------- */
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+/* ---------- Match Score Animation ---------- */
+@keyframes ringFill {
+  from { stroke-dashoffset: 283; }
+  to { stroke-dashoffset: var(--target-offset, 0); }
+}
+.ring-animated { animation: ringFill 1.5s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+/* ---------- Status Pulse ---------- */
+.status-pulse {
+  animation: borderPulse 2s ease-in-out infinite;
+}
+
+/* ---------- Wave Bars ---------- */
+.wave-bars { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
+.wave-bar {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--primary);
+  transform-origin: bottom;
+}
+.wave-bar:nth-child(1) { animation: waveUp 0.8s ease 0s infinite; }
+.wave-bar:nth-child(2) { animation: waveUp 0.8s ease 0.1s infinite; }
+.wave-bar:nth-child(3) { animation: waveUp 0.8s ease 0.2s infinite; }
+.wave-bar:nth-child(4) { animation: waveUp 0.8s ease 0.3s infinite; }
+.wave-bar:nth-child(5) { animation: waveUp 0.8s ease 0.4s infinite; }
+
+/* ---------- Job Recommendation Loading ---------- */
+.recommendation-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background: var(--badge-bg);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: var(--badge-text);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

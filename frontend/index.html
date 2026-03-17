@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobMatch Pro – AI-Powered Job Recommendations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div style="text-align:center;">
+      <div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div>
+      <div class="loader-spinner" style="margin:1rem auto 0;"></div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="auth-page">
+    <!-- Left Hero -->
+    <div class="auth-hero">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+      </div>
+      <div class="auth-hero-content animate-fadeInLeft">
+        <div class="auth-hero-logo">Job<span>Match</span> <span style="color:rgba(255,255,255,0.6);font-size:1.5rem;font-weight:400;">Pro</span></div>
+        <h1>Land Your <br/><em style="font-style:normal;color:var(--accent);">Dream Job</em><br/>with AI</h1>
+        <p>Upload your CV, let our AI analyze your skills, and get personalized job recommendations tailored just for you.</p>
+        <div class="auth-hero-features">
+          <div class="auth-hero-feature animate-fadeInLeft delay-100">
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-robot"></i>
+            </div>
+            <span>AI-powered CV analysis &amp; skill matching</span>
+          </div>
+          <div class="auth-hero-feature animate-fadeInLeft delay-200">
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <span>Personalized job recommendations</span>
+          </div>
+          <div class="auth-hero-feature animate-fadeInLeft delay-300">
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <span>Track applications &amp; career growth</span>
+          </div>
+          <div class="auth-hero-feature animate-fadeInLeft delay-400">
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span>Skill gap analysis &amp; learning paths</span>
+          </div>
+        </div>
+        <div style="margin-top:2.5rem;padding:1.25rem;background:rgba(255,255,255,0.1);border-radius:16px;backdrop-filter:blur(10px);">
+          <div style="display:flex;gap:1rem;align-items:center;">
+            <div style="display:flex;">
+              <div class="avatar" style="width:32px;height:32px;font-size:0.75rem;margin-right:-8px;border:2px solid rgba(255,255,255,0.3);">AJ</div>
+              <div class="avatar" style="width:32px;height:32px;font-size:0.75rem;margin-right:-8px;border:2px solid rgba(255,255,255,0.3);background:linear-gradient(135deg,#f59e0b,#ef4444);">SM</div>
+              <div class="avatar" style="width:32px;height:32px;font-size:0.75rem;border:2px solid rgba(255,255,255,0.3);background:linear-gradient(135deg,#10b981,#3b82f6);">RK</div>
+            </div>
+            <div style="color:rgba(255,255,255,0.9);font-size:0.85rem;">
+              <strong>10,000+</strong> professionals already matched
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Login Form -->
+    <div class="auth-form-side">
+      <div class="auth-form-container animate-fadeInRight">
+        <!-- Theme Toggle -->
+        <div style="display:flex;justify-content:flex-end;margin-bottom:1rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <i class="fas fa-sun" style="font-size:0.85rem;color:var(--text-muted);"></i>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme"></button>
+            <i class="fas fa-moon" style="font-size:0.85rem;color:var(--text-muted);"></i>
+          </div>
+        </div>
+
+        <div class="auth-form-title">Welcome Back! 👋</div>
+        <p class="auth-form-subtitle">Sign in to access your personalized job recommendations</p>
+
+        <div id="loginAlert"></div>
+
+        <form id="loginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label">Gmail Address <span class="required">*</span></label>
+            <div class="input-group">
+              <i class="fas fa-envelope input-icon"></i>
+              <input type="email" class="form-control" id="loginEmail" placeholder="yourname@gmail.com" required autocomplete="email" />
+            </div>
+            <div class="invalid-feedback" id="loginEmailError"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="display:flex;justify-content:space-between;">
+              <span>Password <span class="required">*</span></span>
+              <a href="#" style="font-size:0.82rem;color:var(--primary);" id="forgotPassBtn">Forgot password?</a>
+            </label>
+            <div class="input-group">
+              <i class="fas fa-lock input-icon"></i>
+              <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password" />
+              <i class="fas fa-eye input-action" id="toggleLoginPass"></i>
+            </div>
+            <div class="invalid-feedback" id="loginPassError"></div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+            <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.88rem;color:var(--text-secondary);">
+              <input type="checkbox" id="rememberMe" style="accent-color:var(--primary);width:15px;height:15px;cursor:pointer;" />
+              Remember me for 30 days
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i>
+            <span class="btn-text">Sign In</span>
+          </button>
+        </form>
+
+        <div class="divider"><span class="divider-text">or continue with</span></div>
+
+        <button class="btn btn-outline btn-block" id="googleSignInBtn" style="gap:0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+            <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+            <path d="M3.964 10.71C3.784 10.17 3.682 9.593 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+          </svg>
+          Sign in with Google
+        </button>
+
+        <p class="auth-footer-text" style="margin-top:1.25rem;">
+          Don't have an account? <a href="register.html" style="font-weight:700;color:var(--primary);">Create Account</a>
+        </p>
+        <p class="auth-footer-text" style="margin-top:0.75rem;">
+          Want to explore first? <a href="jobs.html" style="font-weight:700;color:var(--primary);">Continue as Guest</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgotPassModal">
+    <div class="modal" style="max-width:420px;">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-key" style="color:var(--primary);margin-right:8px;"></i>Reset Password</h3>
+        <button class="modal-close" id="closeForgotModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:1.25rem;">Enter your Gmail address and we'll send you a password reset link.</p>
+        <div class="form-group">
+          <label class="form-label">Gmail Address</label>
+          <div class="input-group">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" class="form-control" id="resetEmail" placeholder="yourname@gmail.com" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="cancelForgotBtn">Cancel</button>
+        <button class="btn btn-primary" id="sendResetBtn"><i class="fas fa-paper-plane"></i> Send Reset Link</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Page specific init
+    document.addEventListener('DOMContentLoaded', () => {
+      // Redirect if already logged in
+      if (localStorage.getItem('jmp_token')) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+      hideLoader();
+      initLoginPage();
+    });
+  </script>
+</body>
+</html>

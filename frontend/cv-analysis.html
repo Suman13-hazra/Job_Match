@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Analysis – JobMatch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader"><div style="text-align:center;"><div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div><div class="loader-spinner" style="margin:1rem auto 0;"></div></div></div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo-icon">J</div><div class="sidebar-logo sidebar-text">Job<span>Match</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title sidebar-text">MAIN</div>
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-th-large"></i><span class="sidebar-text">Dashboard</span></a>
+        <a href="jobs.html" class="nav-item"><i class="fas fa-search"></i><span class="sidebar-text">Job Search</span></a>
+        <a href="recommendations.html" class="nav-item"><i class="fas fa-robot"></i><span class="sidebar-text">AI Matches</span></a>
+        <a href="applications.html" class="nav-item"><i class="fas fa-clipboard-list"></i><span class="sidebar-text">My Applications</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">PROFILE</div>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span class="sidebar-text">Job Profile</span></a>
+        <a href="cv-analysis.html" class="nav-item active"><i class="fas fa-file-alt"></i><span class="sidebar-text">CV Analysis</span></a>
+        <a href="saved-jobs.html" class="nav-item"><i class="fas fa-bookmark"></i><span class="sidebar-text">Saved Jobs</span></a>
+        <div class="nav-section-title sidebar-text" style="margin-top:1rem;">ACCOUNT</div>
+        <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span class="sidebar-text">Settings</span></a>
+        <div class="nav-item" id="logoutBtn" style="color:#f87171;cursor:pointer;"><i class="fas fa-sign-out-alt"></i><span class="sidebar-text">Logout</span></div>
+      </nav>
+      <div class="sidebar-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="avatar avatar-sm" id="sidebarAvatar">U</div>
+          <div class="sidebar-text" style="overflow:hidden;"><div style="font-size:0.82rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarName">Loading...</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.4);" id="sidebarEmail">...</div></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content" id="mainContent">
+      <div class="topbar">
+        <button class="toggle-sidebar" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title">CV Analysis</div>
+        <div class="topbar-actions">
+          <div style="display:flex;align-items:center;gap:0.4rem;"><i class="fas fa-sun" style="font-size:0.8rem;color:var(--text-muted);"></i><button class="theme-toggle" id="themeToggle"></button><i class="fas fa-moon" style="font-size:0.8rem;color:var(--text-muted);"></i></div>
+          <div class="dropdown" id="userDropdown"><div class="avatar avatar-sm" id="topbarAvatar" style="cursor:pointer;">U</div><div class="dropdown-menu"><div class="dropdown-item" onclick="window.location='profile.html'"><i class="fas fa-user-circle"></i> My Profile</div><div class="dropdown-divider"></div><div class="dropdown-item" style="color:var(--danger);" id="ddLogout"><i class="fas fa-sign-out-alt" style="color:var(--danger);"></i> Logout</div></div></div>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <div class="page-header animate-fadeInDown">
+          <h1>CV <span style="color:var(--primary);">Analysis</span></h1>
+          <p>See how our AI analyzed your CV and extracted your skills</p>
+        </div>
+
+        <!-- Upload New CV -->
+        <div class="card animate-fadeInUp" style="margin-bottom:1.5rem;padding:1.5rem;">
+          <h4 style="margin-bottom:1rem;"><i class="fas fa-upload" style="color:var(--primary);margin-right:8px;"></i>Update Your CV</h4>
+          <div style="display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+            <div style="flex:1;min-width:250px;">
+              <div class="file-upload-zone" id="updateCvZone" style="padding:1.5rem;">
+                <input type="file" id="updateCvFile" accept=".pdf,.docx,.txt" />
+                <div class="file-upload-icon" style="font-size:1.75rem;"><i class="fas fa-cloud-upload-alt"></i></div>
+                <div class="file-upload-text">Click or drag to upload new CV</div>
+                <div class="file-upload-hint">PDF, DOC, DOCX, TXT – Max 10MB</div>
+              </div>
+            </div>
+            <div style="flex:1;min-width:250px;" id="currentCvInfo">
+              <!-- Current CV info injected by JS -->
+            </div>
+          </div>
+          <div id="updateCvAlert" style="margin-top:1rem;"></div>
+        </div>
+
+        <!-- Analysis Results -->
+        <div class="grid-2" style="gap:1.5rem;" id="analysisSection">
+          <!-- Overall Score -->
+          <div class="card animate-fadeInLeft">
+            <div class="card-header"><h4>Overall CV Score</h4><span class="badge badge-primary" id="cvScoreBadge">Analyzing...</span></div>
+            <div class="card-body" style="display:flex;align-items:center;gap:2rem;">
+              <div class="match-ring" style="width:120px;height:120px;">
+                <svg width="120" height="120" viewBox="0 0 120 120">
+                  <circle class="ring-bg" cx="60" cy="60" r="50" stroke-width="10"/>
+                  <circle class="ring-fill ring-animated" id="cvScoreRing" cx="60" cy="60" r="50" stroke-width="10" stroke="url(#scoreGrad)" style="stroke-dasharray:314;stroke-dashoffset:314;"/>
+                  <defs><linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#4f46e5;"/><stop offset="100%" style="stop-color:#7c3aed;"/></linearGradient></defs>
+                </svg>
+                <div class="ring-text"><div class="ring-percent" id="cvScorePercent">-</div><div class="ring-label">SCORE</div></div>
+              </div>
+              <div>
+                <div id="cvScoreBreakdown" class="skill-match-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact & Summary -->
+          <div class="card animate-fadeInRight">
+            <div class="card-header"><h4>Extracted Info</h4></div>
+            <div class="card-body" id="extractedInfo">
+              <div class="skeleton skeleton-text" style="margin-bottom:0.5rem;"></div>
+              <div class="skeleton skeleton-text" style="width:70%;margin-bottom:0.5rem;"></div>
+              <div class="skeleton skeleton-text" style="width:85%;"></div>
+            </div>
+          </div>
+
+          <!-- Technical Skills -->
+          <div class="card animate-fadeInLeft delay-200">
+            <div class="card-header">
+              <h4><i class="fas fa-code" style="color:var(--primary);margin-right:8px;"></i>Technical Skills Detected</h4>
+              <span class="badge badge-primary" id="skillCountBadge">0 skills</span>
+            </div>
+            <div class="card-body">
+              <div id="detectedSkills" class="skills-container">
+                <div class="skeleton skeleton-text" style="width:80px;"></div>
+                <div class="skeleton skeleton-text" style="width:100px;"></div>
+                <div class="skeleton skeleton-text" style="width:70px;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain Detection -->
+          <div class="card animate-fadeInRight delay-200">
+            <div class="card-header"><h4><i class="fas fa-compass" style="color:var(--primary);margin-right:8px;"></i>Domain Detection</h4></div>
+            <div class="card-body" id="domainDetection">
+              <div class="skeleton skeleton-card" style="height:150px;"></div>
+            </div>
+          </div>
+
+          <!-- Experience Timeline -->
+          <div class="card animate-fadeInLeft delay-300" style="grid-column:span 2;">
+            <div class="card-header"><h4><i class="fas fa-briefcase" style="color:var(--primary);margin-right:8px;"></i>Detected Work Experience</h4></div>
+            <div class="card-body">
+              <div id="detectedExperience">
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text" style="width:70%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skills Gap Analysis -->
+          <div class="card animate-fadeInUp delay-400" style="grid-column:span 2;">
+            <div class="card-header">
+              <div>
+                <h4><i class="fas fa-chart-bar" style="color:var(--primary);margin-right:8px;"></i>Skills Gap Analysis</h4>
+                <p style="font-size:0.82rem;color:var(--text-muted);margin:0;">Skills recommended based on your domain</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="grid-2" style="gap:2rem;">
+                <div>
+                  <h5 style="font-size:0.9rem;margin-bottom:0.75rem;color:var(--success);"><i class="fas fa-check-circle"></i> You Have</h5>
+                  <div id="skillsHave" class="skills-container"></div>
+                </div>
+                <div>
+                  <h5 style="font-size:0.9rem;margin-bottom:0.75rem;color:var(--warning);"><i class="fas fa-star"></i> Learn Next</h5>
+                  <div id="skillsMissing" class="skills-container"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cv-analysis.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      requireAuth();
+      hideLoader();
+      initCvAnalysisPage();
+    });
+  </script>
+</body>
+</html>

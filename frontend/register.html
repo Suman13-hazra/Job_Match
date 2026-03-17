@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account – JobMatch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <div style="text-align:center;">
+      <div class="loader-logo">Job<span style="color:var(--accent)">Match</span></div>
+      <div class="loader-spinner" style="margin:1rem auto 0;"></div>
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="auth-page">
+    <!-- Left Hero -->
+    <div class="auth-hero">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+      <div class="auth-hero-content animate-fadeInLeft">
+        <div class="auth-hero-logo">Job<span>Match</span> <span style="color:rgba(255,255,255,0.6);font-size:1.5rem;font-weight:400;">Pro</span></div>
+        <h1>Start Your<br/><em style="font-style:normal;color:var(--accent);">Career Journey</em><br/>Today</h1>
+        <p>Join thousands of professionals who found their dream job using our AI-powered platform. Upload your CV and let us do the heavy lifting.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;">
+          <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:1rem;text-align:center;" class="animate-scaleIn delay-100">
+            <div style="font-size:1.75rem;font-weight:900;color:var(--accent);">95%</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Match Accuracy</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:1rem;text-align:center;" class="animate-scaleIn delay-200">
+            <div style="font-size:1.75rem;font-weight:900;color:var(--accent);">48h</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Avg. Response Time</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:1rem;text-align:center;" class="animate-scaleIn delay-300">
+            <div style="font-size:1.75rem;font-weight:900;color:var(--accent);">5K+</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Partner Companies</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:1rem;text-align:center;" class="animate-scaleIn delay-400">
+            <div style="font-size:1.75rem;font-weight:900;color:var(--accent);">10K+</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Jobs Matched</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Register Form -->
+    <div class="auth-form-side" style="overflow-y:auto;">
+      <div class="auth-form-container animate-fadeInRight" style="padding:1rem 0;">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:1rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <i class="fas fa-sun" style="font-size:0.85rem;color:var(--text-muted);"></i>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme"></button>
+            <i class="fas fa-moon" style="font-size:0.85rem;color:var(--text-muted);"></i>
+          </div>
+        </div>
+
+        <div class="auth-form-title">Create Account ✨</div>
+        <p class="auth-form-subtitle">Join JobMatch Pro and find your perfect career match</p>
+
+        <div id="registerAlert"></div>
+
+        <!-- Step Indicator -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.75rem;" id="stepIndicator">
+          <div class="step-dot active" data-step="1" style="flex:1;height:4px;border-radius:2px;background:var(--primary);transition:background 0.3s;"></div>
+          <div class="step-dot" data-step="2" style="flex:1;height:4px;border-radius:2px;background:var(--border);transition:background 0.3s;"></div>
+          <div class="step-dot" data-step="3" style="flex:1;height:4px;border-radius:2px;background:var(--border);transition:background 0.3s;"></div>
+        </div>
+
+        <form id="registerForm" novalidate>
+          <!-- Step 1: Personal Info -->
+          <div id="step1" class="form-step">
+            <div style="margin-bottom:1.25rem;font-size:0.85rem;font-weight:700;color:var(--primary);">
+              <i class="fas fa-user-circle"></i> Step 1 of 3 – Personal Info
+            </div>
+            <div class="grid-2" style="gap:1rem;">
+              <div class="form-group">
+                <label class="form-label">First Name <span class="required">*</span></label>
+                <div class="input-group">
+                  <i class="fas fa-user input-icon"></i>
+                  <input type="text" class="form-control" id="firstName" placeholder="John" required />
+                </div>
+                <div class="invalid-feedback" id="firstNameError"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name <span class="required">*</span></label>
+                <div class="input-group">
+                  <i class="fas fa-user input-icon"></i>
+                  <input type="text" class="form-control" id="lastName" placeholder="Doe" required />
+                </div>
+                <div class="invalid-feedback" id="lastNameError"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gmail Address <span class="required">*</span></label>
+              <div class="input-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" class="form-control" id="regEmail" placeholder="yourname@gmail.com" required autocomplete="email" />
+              </div>
+              <div class="invalid-feedback" id="regEmailError"></div>
+              <div class="form-hint">Must be a valid Gmail address (@gmail.com)</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <div class="input-group">
+                <i class="fas fa-phone input-icon"></i>
+                <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 000-0000" autocomplete="tel" />
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" id="nextStep1Btn">
+              Next: Security <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- Step 2: Password & Security -->
+          <div id="step2" class="form-step" style="display:none;">
+            <div style="margin-bottom:1.25rem;font-size:0.85rem;font-weight:700;color:var(--primary);">
+              <i class="fas fa-shield-alt"></i> Step 2 of 3 – Secure Password
+            </div>
+            <div class="form-group">
+              <label class="form-label">Create Password <span class="required">*</span></label>
+              <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" class="form-control" id="regPassword" placeholder="Minimum 8 chars with special character" required autocomplete="new-password" />
+                <i class="fas fa-eye input-action" id="toggleRegPass"></i>
+              </div>
+              <div class="invalid-feedback" id="regPassError"></div>
+              <div class="password-strength" id="strengthMeter">
+                <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                <div class="strength-text" id="strengthText">Enter a password</div>
+              </div>
+              <!-- Password Requirements -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.35rem;margin-top:0.75rem;" id="passRequirements">
+                <div class="pass-req" id="req-len" style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-circle-xmark" style="color:var(--danger);font-size:0.75rem;"></i> Min. 8 characters</div>
+                <div class="pass-req" id="req-upper" style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-circle-xmark" style="color:var(--danger);font-size:0.75rem;"></i> Uppercase letter</div>
+                <div class="pass-req" id="req-lower" style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-circle-xmark" style="color:var(--danger);font-size:0.75rem;"></i> Lowercase letter</div>
+                <div class="pass-req" id="req-num" style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-circle-xmark" style="color:var(--danger);font-size:0.75rem;"></i> Number</div>
+                <div class="pass-req" id="req-special" style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-circle-xmark" style="color:var(--danger);font-size:0.75rem;"></i> Special char (!@#$%)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirm Password <span class="required">*</span></label>
+              <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter your password" required autocomplete="new-password" />
+                <i class="fas fa-eye input-action" id="toggleConfirmPass"></i>
+              </div>
+              <div class="invalid-feedback" id="confirmPassError"></div>
+            </div>
+            <div style="display:flex;gap:0.75rem;">
+              <button type="button" class="btn btn-ghost" id="prevStep2Btn"><i class="fas fa-arrow-left"></i> Back</button>
+              <button type="button" class="btn btn-primary" style="flex:1;" id="nextStep2Btn">
+                Next: Upload CV <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: CV Upload -->
+          <div id="step3" class="form-step" style="display:none;">
+            <div style="margin-bottom:1.25rem;font-size:0.85rem;font-weight:700;color:var(--primary);">
+              <i class="fas fa-file-alt"></i> Step 3 of 3 – Upload Your CV
+            </div>
+            <div class="form-group">
+              <label class="form-label">CV / Resume <span class="required">*</span></label>
+              <div class="file-upload-zone" id="cvDropZone">
+                <input type="file" id="cvFile" accept=".pdf,.docx,.txt" />
+                <div class="file-upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <div class="file-upload-text"><strong>Click to upload</strong> or drag &amp; drop</div>
+                <div class="file-upload-hint">PDF, DOC, DOCX, TXT – Max 10MB</div>
+              </div>
+              <div id="cvFileInfo" style="display:none;margin-top:0.75rem;padding:0.75rem;background:var(--badge-bg);border-radius:10px;display:none;align-items:center;gap:0.75rem;">
+                <i class="fas fa-file-pdf" style="color:var(--danger);font-size:1.25rem;"></i>
+                <div style="flex:1;"><div id="cvFileName" style="font-size:0.85rem;font-weight:600;"></div><div id="cvFileSize" style="font-size:0.75rem;color:var(--text-muted);"></div></div>
+                <button type="button" id="removeCvBtn" style="border:none;background:none;cursor:pointer;color:var(--danger);"><i class="fas fa-trash"></i></button>
+              </div>
+              <div class="invalid-feedback" id="cvError"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred Job Domain <span class="required">*</span></label>
+              <div class="input-group">
+                <i class="fas fa-briefcase input-icon"></i>
+                <select class="form-control" id="domain" required>
+                  <option value="">Select your domain...</option>
+                  <option value="software_engineering">Software Engineering</option>
+                  <option value="data_science">Data Science & AI/ML</option>
+                  <option value="product_management">Product Management</option>
+                  <option value="design">UI/UX Design</option>
+                  <option value="devops">DevOps & Cloud</option>
+                  <option value="cybersecurity">Cybersecurity</option>
+                  <option value="marketing">Digital Marketing</option>
+                  <option value="finance">Finance & Accounting</option>
+                  <option value="sales">Sales & Business Development</option>
+                  <option value="hr">Human Resources</option>
+                  <option value="healthcare">Healthcare</option>
+                  <option value="education">Education</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="invalid-feedback" id="domainError"></div>
+            </div>
+            <div class="form-group">
+              <label style="display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;font-size:0.85rem;color:var(--text-secondary);">
+                <input type="checkbox" id="agreeTerms" style="accent-color:var(--primary);margin-top:2px;cursor:pointer;" required />
+                <span>I agree to the <a href="#" style="color:var(--primary);">Terms of Service</a> and <a href="#" style="color:var(--primary);">Privacy Policy</a></span>
+              </label>
+              <div class="invalid-feedback" id="termsError"></div>
+            </div>
+            <div style="display:flex;gap:0.75rem;">
+              <button type="button" class="btn btn-ghost" id="prevStep3Btn"><i class="fas fa-arrow-left"></i> Back</button>
+              <button type="submit" class="btn btn-primary" style="flex:1;" id="registerBtn">
+                <i class="fas fa-user-plus"></i>
+                <span class="btn-text">Create Account</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <p class="auth-footer-text">
+          Already have an account? <a href="index.html" style="font-weight:700;color:var(--primary);">Sign In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('jmp_token')) { window.location.href = 'dashboard.html'; return; }
+      hideLoader();
+      initRegisterPage();
+    });
+  </script>
+</body>
+</html>
