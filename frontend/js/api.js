@@ -2,7 +2,7 @@
    api.js – Centralized API Client
    ===================================================== */
 
-const API_BASE = 'https://job-match-3caf.onrender.com/';
+const API_BASE = 'https://job-match-3caf.onrender.com/api';
 
 const API = {
   // ---- Auth ----
