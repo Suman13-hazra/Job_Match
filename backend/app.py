@@ -13,7 +13,7 @@ import datetime
 from functools import wraps
 from flask import Flask, request, jsonify, g, send_from_directory
 from flask_cors import CORS
-from database import init_db, get_db
+from database import init_db, get_db, seed_sample_jobs
 
 # NOTE: This backend uses plain SQLite queries (no ORM models).
 from cv_analyzer import CVAnalyzer
@@ -29,6 +29,10 @@ CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=False)
 # Initialize DB
 init_db(app)
 
+with app.app_context():
+    db = get_db()
+    seed_sample_jobs(db)
+    
 cv_analyzer = CVAnalyzer()
 recommender = JobRecommender()
 
